@@ -1,0 +1,40 @@
+#colored-buttons-container button {
+  width: 10em;
+  height: 5em;
+  margin: 5px;
+  font-size: 1em;
+  margin-top: 30px;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#colored-buttons-container {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+}
+
+#top-part {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#guess-message {
+  height: 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  margin: 0;
+  overflow: hidden;
+}
