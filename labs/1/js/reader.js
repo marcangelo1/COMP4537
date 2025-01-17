@@ -1,7 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
   const notesContainer = document.getElementById("notes-container");
+  const lastSaveTime = document.createElement("div");
+  lastSaveTime.classList.add("text-secondary", "mt-2");
+  notesContainer.parentElement.insertBefore(lastSaveTime, notesContainer); // Place the time above the notes
 
   const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+
+  const updateTime = () => {
+    const time = localStorage.getItem("lastUpdated");
+    if (time) {
+      const formattedTime = new Date(time).toLocaleString();
+      lastSaveTime.textContent = `Updated at: ${formattedTime}`;
+    }
+  };
 
   if (savedNotes.length === 0) {
     notesContainer.innerHTML = '<p class="text-muted">No notes available.</p>';
@@ -15,12 +26,16 @@ document.addEventListener("DOMContentLoaded", () => {
         "mb-3",
         "p-3",
         "bg-light",
-        "text-start"  
+        "text-start"
       );
       noteDiv.textContent = note.content;
-      noteDiv.style.wordWrap = "break-word";
+      noteDiv.style.overflowWrap = "break-word";
       noteDiv.style.whiteSpace = "pre-wrap";
       notesContainer.appendChild(noteDiv);
     });
+
+    updateTime();
+
+    setInterval(updateTime, 2000);
   }
 });

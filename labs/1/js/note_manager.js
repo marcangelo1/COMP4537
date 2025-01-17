@@ -27,6 +27,7 @@ export class NoteManager {
       content: note.content,
     }));
     localStorage.setItem("notes", JSON.stringify(serializedNotes));
+    localStorage.setItem("lastUpdated", new Date().toISOString());
   }
 
   #loadNotes() {
