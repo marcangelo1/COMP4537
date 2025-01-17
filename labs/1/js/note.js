@@ -1,3 +1,6 @@
+import { buttonTexts } from "../lang/messages/en/user.js";
+import { writerTexts } from "../lang/messages/en/user.js";
+
 export class Note {
   constructor(content = "", saveNoteCallback, removeNoteCallback) {
     this.content = content;
@@ -38,7 +41,7 @@ export class Note {
   #createRemoveButton(parentElement) {
     const removeButton = document.createElement("button");
     removeButton.classList.add("btn", "btn-danger", "mt-2");
-    removeButton.textContent = "Remove";
+    removeButton.textContent = buttonTexts.removeText;
 
     removeButton.addEventListener("click", () => {
       parentElement.remove();

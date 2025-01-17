@@ -13,14 +13,14 @@
 
 <body class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light text-center">
   <div class="container">
-    <h1 class="text-success fw-bold mb-3">Writer Page</h1>
-    <p class="text-secondary mb-4">Create, modify, and save your notes:</p>
+    <h1 class="text-success fw-bold mb-3" id="page-title"></h1>
+    <p class="text-secondary mb-4" id="page-info"></p>
 
     <div id="notes-container" class="mb-4"></div>
 
     <div class="d-flex gap-3 justify-content-center">
-      <button id="add-note" class="btn btn-success px-4 py-2">Add Note</button>
-      <button onclick="location.href='index.html'" class="btn btn-outline-secondary px-4 py-2">Back to Home</button>
+      <button id="add-button" class="btn btn-success px-4 py-2"></button>
+      <button id="home-button" class="btn btn-outline-secondary px-4 py-2"></button>
     </div>
   </div>
 

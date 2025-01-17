@@ -1,4 +1,5 @@
 import { indexTexts } from "../lang/messages/en/user.js";
+import { buttonTexts } from "../lang/messages/en/user.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -9,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   title.textContent = indexTexts.title;
   info.textContent = indexTexts.info;
-  writerButton.textContent = indexTexts.writerButtonText;
-  readerButton.textContent = indexTexts.readerButtonText;
+  writerButton.textContent = buttonTexts.writerButtonText;
+  readerButton.textContent = buttonTexts.readerButtonText;
 
   writerButton.addEventListener("click", () => {
     location.href = "writer.html";
