@@ -2,6 +2,12 @@ import { NoteManager } from "./note_manager.js";
 import { writerTexts } from "../lang/messages/en/user.js";
 import { buttonTexts } from "../lang/messages/en/user.js";
 
+/*
+This script handles the functionality of the note writer page (writer.html) in a note management application. It enables users to create, edit, and manage notes, with real-time updates and persistence.
+
+This class was developed with the assistance of ChatGPT.
+*/
+
 document.addEventListener("DOMContentLoaded", () => {
   const notesContainer = document.getElementById("notes-container");
   const addNoteButton = document.getElementById("add-button");

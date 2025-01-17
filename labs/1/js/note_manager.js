@@ -1,5 +1,11 @@
 import { Note } from "./note.js";
 
+/*
+The NoteManager class provides functionality to manage notes. It enables creating, storing, and removing notes while maintaining persistence using localStorage.
+
+This class was developed with the assistance of ChatGPT.
+*/
+
 export class NoteManager {
   constructor() {
     this.notes = [];

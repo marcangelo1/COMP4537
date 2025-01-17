@@ -1,5 +1,10 @@
 import { buttonTexts } from "../lang/messages/en/user.js";
-import { writerTexts } from "../lang/messages/en/user.js";
+
+/*
+The Note class provides the structure and behavior for individual notes in a note management application. It handles creating, rendering, and managing note content and interactions.
+
+This class was developed with the assistance of ChatGPT.
+*/
 
 export class Note {
   constructor(content = "", saveNoteCallback, removeNoteCallback) {

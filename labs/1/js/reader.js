@@ -1,6 +1,12 @@
 import { buttonTexts } from "../lang/messages/en/user.js";
 import { readerTexts } from "../lang/messages/en/user.js";
 
+/*
+This script manages the functionality of a note reader page, which displays saved notes and their metadata, such as the last update time. It handles dynamic updates and navigation features.
+
+This class was developed with the assistance of ChatGPT.
+*/
+
 document.addEventListener("DOMContentLoaded", () => {
   const notesContainer = document.getElementById("notes-container");
   const lastSaveTime = document.createElement("div");
