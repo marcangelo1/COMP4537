@@ -1,73 +1,52 @@
-// Notes array to store instances of the Note class
-let notes = [];
-
-// Get references to DOM elements
-const notesContainer = document.getElementById("notes-container");
-const addNoteButton = document.getElementById("add-note");
-
-// Note Class
-class Note {
-  constructor(content = "") {
-    this.content = content; // Note content
-    this.element = null; // DOM element for this note
-    this.createElement(); // Create the DOM representation
+export class Note {
+  constructor(content = "", saveNoteCallback, removeNoteCallback) {
+    this.content = content;
+    this.element = null;
+    this.saveNoteCallback = saveNoteCallback;
+    this.removeNoteCallback = removeNoteCallback;
   }
 
-  // Create the DOM elements for the note
-  createElement() {
+  createNote(container) {
+    this.element = this.#createAFieldForNote();
+    container.appendChild(this.element);
+  }
+
+  #createAFieldForNote() {
     const noteDiv = document.createElement("div");
-    noteDiv.classList.add("note");
+    noteDiv.classList.add("note", "mb-3");
 
-    // Textarea for note content
     const textArea = document.createElement("textarea");
+    textArea.classList.add("form-control");
+    textArea.rows = 3;
     textArea.value = this.content;
+
     textArea.addEventListener("input", (e) => {
-      this.content = e.target.value; // Update content in real time
-      saveNotes(); // Save all notes to localStorage
+      this.content = e.target.value;
+      if (this.saveNoteCallback) {
+        this.saveNoteCallback();
+      }
     });
 
-    // Remove button
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.addEventListener("click", () => {
-      this.remove();
-    });
+    const removeButton = this.#createRemoveButton(noteDiv);
 
-    // Append textarea and remove button to the note div
     noteDiv.appendChild(textArea);
     noteDiv.appendChild(removeButton);
 
-    // Add the note div to the DOM and store the element
-    notesContainer.appendChild(noteDiv);
-    this.element = noteDiv;
+    return noteDiv;
   }
 
-  // Remove this note from the DOM and notes array
-  remove() {
-    this.element.remove(); // Remove from DOM
-    notes = notes.filter((note) => note !== this); // Remove from array
-    saveNotes(); // Save changes to localStorage
+  #createRemoveButton(parentElement) {
+    const removeButton = document.createElement("button");
+    removeButton.classList.add("btn", "btn-danger", "mt-2");
+    removeButton.textContent = "Remove";
+
+    removeButton.addEventListener("click", () => {
+      parentElement.remove();
+      if (this.removeNoteCallback) {
+        this.removeNoteCallback(this);
+      }
+    });
+
+    return removeButton;
   }
-}
-
-// Add a new note to the DOM and `notes` array
-addNoteButton.addEventListener("click", () => {
-  const note = new Note(""); // Create a new note instance
-  notes.push(note); // Add to notes array
-  saveNotes(); // Save all notes to localStorage
-});
-
-// Load notes from localStorage on page load
-window.onload = () => {
-  const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
-  savedNotes.forEach((noteData) => {
-    const note = new Note(noteData.content); // Create a new note instance
-    notes.push(note); // Add to notes array
-  });
-};
-
-// Save all notes to localStorage
-function saveNotes() {
-  const noteData = notes.map((note) => ({ content: note.content }));
-  localStorage.setItem("notes", JSON.stringify(noteData));
 }
