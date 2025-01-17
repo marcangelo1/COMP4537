@@ -4,27 +4,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Note App - Home</title>
+  <title>Writer</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light text-center">
-  <h1 id="title" class="text-success fw-bold mb-3">Welcome to the Note App</h1>
-  <p id="info" class="text-secondary mb-4">This app lets you create, save, and view notes.</p>
+  <div class="container">
+    <h1 class="text-success fw-bold mb-3">Writer Page</h1>
+    <p class="text-secondary mb-4">Create, modify, and save your notes:</p>
 
-  <div class="d-flex gap-3">
-    <button id="writer-button" class="btn btn-success px-4 py-2">Go to Writer</button>
-    <button id="reader-button" class="btn btn-outline-success px-4 py-2">Go to Reader</button>
+    <div id="notes-container" class="mb-4"></div>
+
+    <div class="d-flex gap-3 justify-content-center">
+      <button id="add-note" class="btn btn-success px-4 py-2">Add Note</button>
+      <button onclick="location.href='index.html'" class="btn btn-outline-secondary px-4 py-2">Back to Home</button>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
 
-  <script src="js/script.js" type="module"></script>
+  <script src="js/note.js" type="module"></script>
 </body>
 
 </html>
