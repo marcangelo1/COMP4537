@@ -27,9 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const updateTime = () => {
     const time = localStorage.getItem("lastUpdated");
-    if (time) {
+    const savedNotes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    if (savedNotes.length > 0 && time) {
       const formattedTime = new Date(time).toLocaleString();
       lastSaveTime.textContent = `${writerTexts.storeText}${formattedTime}`;
+    }  else {
+      lastSaveTime.textContent = "";
     }
   };
 
