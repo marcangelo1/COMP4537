@@ -1,17 +1,18 @@
 const http = require("http");
 
-const { getDate } = require("./utils/utils");
+const { getDate } = require("./modules/utils");
+const { message: messageTemplate } = require('./lang/en/en');
 
 const server = http.createServer((req, res) => {
 
   // Parse the request url to node.js server
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  if (url.pathname === '/getDate') {
+  if (url.pathname === '/getDate/') {
     // Get the passed name from the url
     const name = url.searchParams.get("name");
 
-    const message = `Hello ${name}, What a beautiful day. Server current date and time is ${getDate()}`;
+    const message = messageTemplate.replace('%name%', name).replace('%date%', getDate())
 
     // Send a status code of 200 and a key value pair text/html so that the browser renders the response as HTML.
     res.writeHead(200, { "Content-Type": "text/html" });
