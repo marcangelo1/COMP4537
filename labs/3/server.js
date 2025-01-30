@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
   // Parse the request url to node.js server
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  if (url.pathname === "/getDate/") {
+  if (url.pathname === "COMP4537/labs/3/getDate/") {
     // Get the passed name from the url
     const name = url.searchParams.get("name");
 
