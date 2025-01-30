@@ -25,7 +25,6 @@ const server = http.createServer((req, res) => {
     // Extract the filename from the URL
     const fileName = url.pathname.replace("/readFile/", "").trim();
 
-    // Prevent directory traversal attack (e.g., /readFile/../../etc/passwd)
     const filePath = path.join(__dirname, fileName);
 
     // Check if the file exists
