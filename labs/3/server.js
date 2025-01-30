@@ -6,58 +6,67 @@ const { getDate } = require("./modules/utils");
 const { message: messageTemplate } = require("./lang/en/en");
 
 const server = http.createServer((req, res) => {
-  // Parse the request url to node.js server
+  // Parse the request URL
   const url = new URL(req.url, `http://${req.headers.host}`);
 
-  if (url.pathname === "/COMP4537/labs/3getDate/") {
-    // Get the passed name from the url
-    const name = url.searchParams.get("name");
+  // Ensure all routes start with /COMP4537/labs/3/
+  if (url.pathname.startsWith("/COMP4537/labs/3/")) {
+    const route = url.pathname.replace("/COMP4537/labs/3/", "").trim(); // Extract the specific route
 
-    const message = messageTemplate
-      .replace("%name%", name)
-      .replace("%date%", getDate());
+    if (route === "getDate/") {
+      const name = url.searchParams.get("name");
 
-    // Send a status code of 200 and a key value pair text/html so that the browser renders the response as HTML.
-    res.writeHead(200, { "Content-Type": "text/html" });
-    // Final response to the client.
-    res.end(`<span style="color:blue;">${message}</span>`);
-  } else if (url.pathname.startsWith("/readFile/")) {
-    // Extract the filename from the URL
-    const fileName = url.pathname.replace("/readFile/", "").trim();
+      const message = messageTemplate
+        .replace("%name%", name)
+        .replace("%date%", getDate());
 
-    const filePath = path.join(__dirname, fileName);
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(`<span style="color:blue;">${message}</span>`);
+    } else if (route.startsWith("readFile/")) {
+      // Extract the filename from the route
+      const fileName = route.replace("readFile/", "").trim();
+      const filePath = path.join(__dirname, fileName);
 
-    // Check if the file exists
-    fileSystem.access(filePath, fileSystem.constants.F_OK, (err) => {
-      if (err) {
-        res.writeHead(404, { "Content-Type": "text/plain" });
-        res.end(`404: ${fileName} does not exist.`);
-      } else {
-        // Read and return the file content
-        fileSystem.readFile(filePath, "utf-8", (err, data) => {
-          if (err) {
-            res.writeHead(500, { "Content-Type": "text/plain" });
-            res.end("500: Internal Server Error");
-          } else {
-            res.writeHead(200, { "Content-Type": "text/plain" });
-            res.end(data);
-          }
-        });
+      // Check if the file exists
+      fileSystem.access(filePath, fileSystem.constants.F_OK, (err) => {
+        if (err) {
+          res.writeHead(404, { "Content-Type": "text/plain" });
+          res.end(`404: ${fileName} does not exist.`);
+        } else {
+          // Read and return the file content
+          fileSystem.readFile(filePath, "utf-8", (err, data) => {
+            if (err) {
+              res.writeHead(500, { "Content-Type": "text/plain" });
+              res.end("500: Internal Server Error");
+            } else {
+              res.writeHead(200, { "Content-Type": "text/plain" });
+              res.end(data);
+            }
+          });
+        }
+      });
+    } else if (route.startsWith("writeFile/")) {
+      const text = url.searchParams.get("text");
+      if (!text) {
+        res.writeHead(400, { "Content-Type": "text/plain" });
+        res.end("400: Bad Request - Missing 'text' parameter");
+        return;
       }
-    });
-  } else if (url.pathname === "/writeFile/") {
-    const text = url.searchParams.get("text");
-    const filePath = path.join(__dirname, "file.txt");
-    console.log(filePath);
-    fileSystem.appendFile(filePath, text + "\n", (err) => {
-      if (err) {
-        res.writeHead(500, { "Content-Type": "text/plain" });
-        res.end("500: Internal Server Error");
-      } else {
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end("Text successfully written to the file!");
-      }
-    });
+
+      const filePath = path.join(__dirname, "file.txt");
+      fileSystem.appendFile(filePath, text + "\n", (err) => {
+        if (err) {
+          res.writeHead(500, { "Content-Type": "text/plain" });
+          res.end("500: Internal Server Error");
+        } else {
+          res.writeHead(200, { "Content-Type": "text/plain" });
+          res.end("Text successfully written to the file!");
+        }
+      });
+    } else {
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      res.end("404: Not Found");
+    }
   } else {
     res.writeHead(404, { "Content-Type": "text/plain" });
     res.end("404: Not Found");
